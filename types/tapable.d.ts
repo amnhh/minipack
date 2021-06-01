@@ -21,7 +21,7 @@ type Append<T extends any[], U> = {
     6: [T[0], T[1], T[2], T[3], T[4], T[5], U];
     7: [T[0], T[1], T[2], T[3], T[4], T[5], T[6], U];
     8: [T[0], T[1], T[2], T[3], T[4], T[5], T[6], T[7], U];
-}[Measure<T["length"]>];
+}[Measure<T['length']>];
 type AsArray<T> = T extends any[] ? T : [T];
 
 declare class UnsetAdditionalOptions {
@@ -32,8 +32,10 @@ type IfSet<X> = X extends UnsetAdditionalOptions ? {} : X;
 type Callback<E, T> = (error: E | null, result?: T) => void;
 type InnerCallback<E, T> = (error?: E | null | false, result?: T) => void;
 
+type TapType = 'sync' | 'async' | 'promise'
+
 type FullTap = Tap & {
-    type: "sync" | "async" | "promise",
+    type: TapType
     fn: Function
 }
 
@@ -57,7 +59,7 @@ interface HookInterceptor<T, R, AdditionalOptions = UnsetAdditionalOptions> {
     register?: (tap: FullTap & IfSet<AdditionalOptions>) => FullTap & IfSet<AdditionalOptions>;
 }
 
-type ArgumentNames<T extends any[]> = FixedSizeArray<T["length"], string>;
+type ArgumentNames<T extends any[]> = FixedSizeArray<T['length'], string>;
 
 declare class Hook<T, R, AdditionalOptions = UnsetAdditionalOptions> {
     constructor(args?: ArgumentNames<AsArray<T>>, name?: string);
@@ -67,7 +69,7 @@ declare class Hook<T, R, AdditionalOptions = UnsetAdditionalOptions> {
     callAsync(...args: Append<AsArray<T>, Callback<Error, R>>): void;
     promise(...args: AsArray<T>): Promise<R>;
     tap(options: string | Tap & IfSet<AdditionalOptions>, fn: (...args: AsArray<T>) => R): void;
-    withOptions(options: TapOptions & IfSet<AdditionalOptions>): Omit<this, "call" | "callAsync" | "promise">;
+    withOptions(options: TapOptions & IfSet<AdditionalOptions>): Omit<this, 'call' | 'callAsync' | 'promise'>;
 }
 
 export class SyncHook<T, R = void, AdditionalOptions = UnsetAdditionalOptions> extends Hook<T, R, AdditionalOptions> {
