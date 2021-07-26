@@ -40,3 +40,32 @@ declare namespace D_Hooks {
     type: TapType
   }
 }
+
+declare namespace D_Hook_Factory {
+  type callTemplateOpts = {
+    /**
+     * 出错时的函数片段
+     */
+    onError?: (...err: any[]) => string
+
+    /**
+     * 对于返回值的函数片段
+     */
+    onResult?: (...result: any[]) => string
+
+    /**
+     * 结束的函数片段
+     */
+    onDone?: (...args: any[]) => string
+
+    /**
+     * 是否返回 result
+     */
+    resultReturns?: boolean
+
+    /**
+     * 是否重复抛出错误 => 区分于 onError
+     */
+    rethrowIfPossible?: boolean
+  }
+}

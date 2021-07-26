@@ -1,9 +1,10 @@
 import { AbstractMethodAvoidCallException } from './utils/error'
+import I_Lib_Hook from './interface/Hook.inf'
 
 /**
  * Hook 基类
  */
-export default class Hook {
+export default class Hook implements I_Lib_Hook{
   /**
    * 参数列表
    */
@@ -20,6 +21,11 @@ export default class Hook {
   _taps: D_Hooks.FullTap[]
 
   /**
+   * 回调集合
+   */
+  _x: Function[]
+
+  /**
    * 构造器
    * @param args
    * @param name
@@ -28,60 +34,42 @@ export default class Hook {
     this._args = args
     this._name = name
     this._taps = []
+    this._x = []
   }
 
   /**
    * 创建调用语句
    *
-   * 子类实现
    */
-  _createCall(type: D_Hooks.TapType) {
-    const { _taps: taps, _args: args } = this
-    return this.compile({
-      // interceptors: [],
-      taps,
-      args,
-      type,
-    })
-  }
+  _createCall = (type: D_Hooks.TapType) => this.compile({
+    taps: this._taps,
+    args: this._args,
+    type,
+  })
 
   /**
    * 生成调用中间态
    *
-   * 子类实现
+   * TODO 暂时 mock 实现
+   *
    */
-  compile(opts: D_Hooks.CompileOpts): Function {
-    // TODO 暂时 mock 实现
-    return (...args) => {}
-  }
+  compile = (opts: D_Hooks.CompileOpts): Function => (...args) => {}
 
   /**
    * 同步调用
-   *
-   * 子类实现
    */
-  call(...args: any[]) {
-    const _call = this._createCall('sync')
-    return _call(...args)
-  }
+  call = (...args: any[]) => this._createCall('sync')(...args)
 
   /**
    * 异步调用
    *
-   * 子类实现
    */
-  callAsync(...args: any[]) {
-    const _call = this._createCall('async')
-    return _call(...args)
-  }
+  callAsync = (...args: any[]) => this._createCall('async')(...args)
 
   /**
    * Promise 方式异步调用
    *
    * 子类实现
    */
-  callPromise(...args: any[]) {
-    const _call = this._createCall('promise')
-    return _call(...args)
-  }
+  callPromise = (...args: any[]) => this._createCall('promise')(...args)
 }
