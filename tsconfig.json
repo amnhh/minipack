@@ -2,13 +2,15 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
     "target": "es2017",
     "module": "commonjs",
     "baseUrl": "."
   },
   "exclude": ["node_modules"],
   "include": [
-    "lib/**/*"
+    "src/**/*",
+    "lib/**/*",
+    "types/**/*"
   ]
 }
