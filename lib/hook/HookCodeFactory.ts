@@ -1,5 +1,5 @@
 import I_Lib_Hook from './interface/Hook.inf'
-import { batchStrWithEnter } from './utils/entry'
+import { batchStrWithEnter } from '../../share/entry'
 
 export default class HookCodeFactory {
   _opts: D_Hooks.CompileOpts

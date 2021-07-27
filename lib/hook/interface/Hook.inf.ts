@@ -29,7 +29,7 @@ export default interface I_Lib_Hook {
    * @param options
    * @param cb
    */
-  _tap(type: D_Hooks.TapType, options: D_Hooks.TapOpts, cb: Function): void
+  _tap(type: D_Hooks.TapType, options: D_Hooks.Tap, cb: Function): void
 
   /**
    * 创建调用语句

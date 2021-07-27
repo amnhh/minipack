@@ -1,5 +1,6 @@
-import { AbstractMethodAvoidCallException } from './utils/error'
+import { AbstractMethodAvoidCallException } from '../../share/error'
 import I_Lib_Hook from './interface/Hook.inf'
+import { isEmptyStr, isNull, isString } from '../../share/type'
 
 /**
  * Hook 基类
@@ -25,9 +26,6 @@ export default class Hook implements I_Lib_Hook{
    */
   _x: Function[]
 
-  tap = (options: D_Hooks.FullTapOpts, cb: Function) => {
-    this._tap('sync', options, cb)
-  }
 
   /**
    * 构造器
@@ -76,12 +74,53 @@ export default class Hook implements I_Lib_Hook{
    */
   callPromise = (...args: any[]) => this._createCall('promise')(...args)
 
+  /**
+   * 添加异步 tap
+   * @param options
+   * @param cb
+   */
+  tapAsync = (options: D_Hooks.FullTapOpts, cb: Function): void => this._tap('promise', options, cb)
+
+  /**
+   * 添加 promise 类 tap
+   * @param options
+   * @param cb
+   */
+  tapPromise = (options: D_Hooks.FullTapOpts, cb: Function): void => this._tap('promise', options, cb)
+
+  /**
+   * 添加同步 tap
+   * @param options
+   * @param cb
+   */
+  tap = (options: D_Hooks.FullTapOpts, cb: Function) => this._tap('sync', options, cb)
+
+  /**
+   * tap 包装函数
+   * @param type
+   * @param options
+   * @param cb
+   */
   _tap = (type: D_Hooks.TapType, options: D_Hooks.FullTapOpts, cb: Function): void => {
+    if (isEmptyStr(options)) throw new Error('Missing name for tap')
+    if (isNull(options)) throw new Error('Invalid tap options')
+    if (isString(options)) options = { name: <string>options }
+
+    const item: D_Hooks.FullTap = {
+      type,
+      cb,
+      ...<D_Hooks.TapOpts>options
+    }
+
+    this._insert(item)
   }
 
-  tapAsync = (options: D_Hooks.TapOpts, cb: Function): void => {
-  }
-
-  tapPromise = (options: D_Hooks.TapOpts, cb: Function): void => {
+  /**
+   * tap 插入函数
+   * @param item
+   */
+  _insert(item: D_Hooks.FullTap) {
+    // TODO before, weights, interceptors 待实现
+    this._cbs.push(item)
   }
 }

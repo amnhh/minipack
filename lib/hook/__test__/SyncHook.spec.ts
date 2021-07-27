@@ -6,8 +6,5 @@ describe('SyncHook', function() {
     expect(() => hook.tap("", () => {})).toThrow(
       new Error("Missing name for tap")
     );
-    expect(() => hook.tap(" ", () => {})).toThrow(
-      new Error("Missing name for tap")
-    );
   })
 })

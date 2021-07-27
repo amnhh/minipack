@@ -13,16 +13,17 @@ declare namespace D_Hooks {
     weights?: number
   }
 
-  type FullTapOpts = TapOpts | TapName
-
-  type BasicTap = TapOpts & {
-    name: string
+  type Tap = TapOpts & {
+    // tap 名字
+    name?: string
   }
+
+  type FullTapOpts = Tap | TapName
 
   /**
    * 完整 tap
    */
-  type FullTap = BasicTap & {
+  type FullTap = Tap & {
     cb: Function
     type: TapType
   }
