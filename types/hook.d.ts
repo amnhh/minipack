@@ -13,6 +13,8 @@ declare namespace D_Hooks {
     weights?: number
   }
 
+  type FullTapOpts = TapOpts | TapName
+
   type BasicTap = TapOpts & {
     name: string
   }

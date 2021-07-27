@@ -18,12 +18,16 @@ export default class Hook implements I_Lib_Hook{
   /**
    * 回调集合
    */
-  _taps: D_Hooks.FullTap[]
+  _cbs: D_Hooks.FullTap[]
 
   /**
    * 回调集合
    */
   _x: Function[]
+
+  tap(options: D_Hooks.FullTapOpts, cb: Function) {
+    this._tap('sync', options, cb)
+  }
 
   /**
    * 构造器
@@ -33,7 +37,7 @@ export default class Hook implements I_Lib_Hook{
   constructor (args: D_Hooks.TapArg[], name?: D_Hooks.TapName) {
     this._args = args
     this._name = name
-    this._taps = []
+    this._cbs = []
     this._x = []
   }
 
@@ -42,14 +46,13 @@ export default class Hook implements I_Lib_Hook{
    *
    */
   _createCall = (type: D_Hooks.TapType) => this.compile({
-    taps: this._taps,
+    taps: this._cbs,
     args: this._args,
     type,
   })
 
   /**
    * 生成调用中间态
-   *
    * TODO 暂时 mock 实现
    *
    */
@@ -72,4 +75,13 @@ export default class Hook implements I_Lib_Hook{
    * 子类实现
    */
   callPromise = (...args: any[]) => this._createCall('promise')(...args)
+
+  _tap(type: D_Hooks.TapType, options: D_Hooks.FullTapOpts, cb: Function): void {
+  }
+
+  tapAsync(options: D_Hooks.TapOpts, cb: Function): void {
+  }
+
+  tapPromise(options: D_Hooks.TapOpts, cb: Function): void {
+  }
 }
