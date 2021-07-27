@@ -25,7 +25,7 @@ export default class Hook implements I_Lib_Hook{
    */
   _x: Function[]
 
-  tap(options: D_Hooks.FullTapOpts, cb: Function) {
+  tap = (options: D_Hooks.FullTapOpts, cb: Function) => {
     this._tap('sync', options, cb)
   }
 
@@ -76,12 +76,12 @@ export default class Hook implements I_Lib_Hook{
    */
   callPromise = (...args: any[]) => this._createCall('promise')(...args)
 
-  _tap(type: D_Hooks.TapType, options: D_Hooks.FullTapOpts, cb: Function): void {
+  _tap = (type: D_Hooks.TapType, options: D_Hooks.FullTapOpts, cb: Function): void => {
   }
 
-  tapAsync(options: D_Hooks.TapOpts, cb: Function): void {
+  tapAsync = (options: D_Hooks.TapOpts, cb: Function): void => {
   }
 
-  tapPromise(options: D_Hooks.TapOpts, cb: Function): void {
+  tapPromise = (options: D_Hooks.TapOpts, cb: Function): void => {
   }
 }
